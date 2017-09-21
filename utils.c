@@ -22,7 +22,19 @@ int parse_words(char *entire_line, char *words[]){
 	return i;
 }
 
-int execute_command(char *args[], int concurrent){
+int check_concurrency(char *args[]){
+
+	int i = 0;
+	while(args[i] != NULL) i++;
+	if(strcmp(args[i-1], "&") == 0){
+		args[i-1] = NULL;
+		return 1;
+	}
+
+	return 0;
+}
+
+int execute_command(char *args[]){
 
 	if(strcmp(args[0], "exit") == 0)
 		return EXIT_CODE_QUIT;

@@ -17,6 +17,8 @@
 // parses `entire_line` into `words` delimited by " " and returns highest index + 1
 int parse_words(char *entire_line, char *words[]);
 
-int execute_command(char *args[], int concurrent);
+int execute_command(char *args[]);
+
+int check_concurrency(char *args[]);
 
 #endif

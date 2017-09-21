@@ -8,7 +8,7 @@ all: $(OBJECTS)
 %.o: %.c %.h
 	$(CC) -c $<
 
-main.o: main.c utils.h
+main.o: main.c utils.h history.h
 	$(CC) -c main.c
 
 clean:
