@@ -1,19 +1,21 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#define MAX_LINE_LENGTH 80 /* maximum length of a command line */
+#include "utils.h"
 
 
 int main(void){
-	char *args[MAX_LINE_LENGTH/2]; /* command line arguments */
+	char *args[MAX_WORD_COUNT]; /* command line arguments */
 	char user_command[MAX_LINE_LENGTH];
-	int run = 1;
+	int run = 1, i, word_count;
 
 	while(run){
 		printf("osh>");
-		fgets(user_command, 80, stdin);
+		fgets(user_command, MAX_LINE_LENGTH, stdin);
 
-		printf("You wrote: %s\n", user_command);
+		word_count = parse_words(user_command, args);
+		for(i = 0; i < word_count; i++)
+			printf("Word #%d: \"%s\"\n", i, args[i]);
 	}
 
 	return 0;
