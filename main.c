@@ -17,6 +17,7 @@ int main(void){
 	while(run){
 		printf("osh>");
 		fgets(user_command, MAX_LINE_LENGTH, stdin);
+		remove_trailing_n(user_command);
 
 		parse_words(user_command, args);
 
@@ -41,7 +42,7 @@ int main(void){
 			if(fork() == 0){
 
 				if(execute_command(args) != 0){
-					printf("Invalid command");
+					printf("Invalid command\n");
 				}
 			}
 			// parent process

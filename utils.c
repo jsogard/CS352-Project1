@@ -7,6 +7,9 @@
 
 int parse_words(char *entire_line, char *words[]){
 
+
+
+
 	// keep original string unmodified
 	char *temp = calloc(strlen(entire_line)+1, sizeof(char));
 	strcpy(temp, entire_line);
@@ -27,6 +30,8 @@ int parse_words(char *entire_line, char *words[]){
 	return i;
 }
 
+
+
 int check_concurrency(char *args[]){
 
 	int i = 0;
@@ -46,4 +51,10 @@ int execute_command(char *args[]){
 	}
 
 	return 0;
+}
+
+void remove_trailing_n(char *command){
+
+	const char delim[2] = "\n";
+	strtok(command, delim);
 }

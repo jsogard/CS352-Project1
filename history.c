@@ -21,6 +21,8 @@ void push(history *hist, log *hlog){
 
 	if(hist->top) 
 		hist->top->prev = hlog;
+	else
+		hist->bottom = hlog;
 	hist->top = hlog;
 	hist->size++;
 
@@ -41,7 +43,7 @@ void add_log(history *hist, char *cmd){
 	strcpy(hlog->command, cmd);
 
 	push(hist, hlog);
-	if(hist->size >= MAX_HISTORY_LOG_SIZE)
+	if(hist->size > MAX_HISTORY_LOG_SIZE)
 		pop(hist);
 
 }
@@ -69,7 +71,7 @@ char *history_to_string(history *hist){
 	char *out = "";
 	log *curr = hist->top;
 	while(curr){
-		printf("%2d:%s\n", curr->index, curr->command);
+		printf("%2d: %s\n", curr->index, curr->command);
 		curr = curr->next;
 	}
 	return out;
