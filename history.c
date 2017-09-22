@@ -40,6 +40,7 @@ void pop(history *hist){
 void add_log(history *hist, char *cmd){
 
 	log *hlog = (log*)malloc(sizeof(log));
+	hlog->command[MAX_LINE_LENGTH] = '\0';
 	strcpy(hlog->command, cmd);
 
 	push(hist, hlog);

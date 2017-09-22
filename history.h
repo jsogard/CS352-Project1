@@ -3,10 +3,12 @@
 
 #define MAX_HISTORY_LOG_SIZE 10
 
+#include "consts.h"
+
 
 typedef struct log{
 
-	char command[80];
+	char command[MAX_LINE_LENGTH + 1];
 	int index;
 	struct log *next;
 	struct log *prev;

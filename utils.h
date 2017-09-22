@@ -2,9 +2,7 @@
 #define UTILS_H
 
 #include <errno.h>
-
-#define MAX_LINE_LENGTH 80 /* maximum length of a command line */
-#define MAX_WORD_COUNT MAX_LINE_LENGTH/2
+#include "consts.h"
 
 
 // parses `entire_line` into `words` delimited by " " and returns highest index + 1
