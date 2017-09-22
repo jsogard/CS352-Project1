@@ -1,16 +1,21 @@
 #include "utils.h"
 
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 
 int parse_words(char *entire_line, char *words[]){
+
+	// keep original string unmodified
+	char *temp = calloc(strlen(entire_line)+1, sizeof(char));
+	strcpy(temp, entire_line);
 	
 	const char delim[3] = " \n";
 	char *token;
 	int i = 0;
 
-	token = strtok(entire_line, delim);
+	token = strtok(temp, delim);
 
 	while(token != NULL && i < MAX_WORD_COUNT){
 		words[i++] = token;
@@ -35,9 +40,6 @@ int check_concurrency(char *args[]){
 }
 
 int execute_command(char *args[]){
-
-	if(strcmp(args[0], "exit") == 0)
-		return EXIT_CODE_QUIT;
 
 	if(execvp(args[0], args) == -1){
 		return errno;

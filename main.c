@@ -7,43 +7,48 @@
 #include "history.h"
 
 
-
 int main(void){
-	char *args[MAX_WORD_COUNT + 1]; /* command line arguments */
+	char *args[MAX_WORD_COUNT + 1]; 
 	char user_command[MAX_LINE_LENGTH];
-	int keep_running = 1, return_code, be_concurrent;
-
+	int run = 1, be_concurrent;
+	history *hist = new_history();
 	args[MAX_WORD_COUNT] = NULL;
 
-	while(keep_running){
+	while(run){
 		printf("osh>");
 		fgets(user_command, MAX_LINE_LENGTH, stdin);
 
 		parse_words(user_command, args);
-		be_concurrent = check_concurrency(args);
 
+		// display history
+		if(strcmp(args[0], "history") == 0){
+			history_to_string(hist);
+		}
+		// exit program
+		else if(strcmp(args[0], "exit") == 0){
+			run = 0;
+			free_history(hist);
+		}
+		// execute a command
+		else{
 
+			// TODO check if history argument
 
-		if(strcmp(args[0], "exit") == 0){
+			add_log(hist, user_command);
+			be_concurrent = check_concurrency(args);
 
-			keep_running = 0;
+			// make child process execute command
+			if(fork() == 0){
 
-		} else if(fork() == 0){ /* child process */
-
-			printf("\n");
-			return_code = execute_command(args);
-
-			switch(return_code){
-				case EXIT_CODE_OKAY:
-					break;
-				default:
-					printf("ERROR #%d\n", return_code);
+				if(execute_command(args) != 0){
+					printf("Invalid command");
+				}
 			}
-
-		} else { /* parent process */
-
-			if(be_concurrent)
-				wait(NULL);
+			// parent process
+			else{
+				if(be_concurrent)
+					wait(NULL);
+			}
 
 		}
 	

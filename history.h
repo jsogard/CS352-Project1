@@ -1,25 +1,32 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 
+#define MAX_HISTORY_LOG_SIZE 10
 
-typedef struct log_cmd{
-	char *command;
+
+typedef struct log{
+
+	char command[80];
 	int index;
-	struct log_cmd *next;
-	struct log_cmd *prev;
-} log_cmd;
+	struct log *next;
+	struct log *prev;
 
-typedef struct history_log{
+} log;
+
+typedef struct history{
 
 	int size;
-	log_cmd *top;
-	log_cmd *bottom;
+	log *top;
+	log *bottom;
 
-} history_log;
+} history;
 
-void add_cmd(history_log *log, char *args[]);
-void get_cmd(history_log *log, int index);
-void log_to_string(history_log *log);
+history *new_history();
+void add_log(history *hist, char *cmd);
+char *get_log(history *hist, int index);
+char *get_last_log(history *hist);
+char *history_to_string(history *hist);
+void free_history(history *hist);
 
 
 #endif

@@ -1,15 +1,15 @@
-OBJECTS = main.o utils.o
+OBJECTS = main.o utils.o history.o
 CC = gcc
-CFLAGS = -Werror -Wall
+CFLAGS = -Werror -Wall -g -c
 
 all: $(OBJECTS)
 	$(CC) -o cs352 $(OBJECTS)
 
 %.o: %.c %.h
-	$(CC) -c $<
+	$(CC) $(CFLAGS) $<
 
 main.o: main.c utils.h history.h
-	$(CC) -c main.c
+	$(CC) $(CFLAGS) main.c
 
 clean:
 	rm -rf *~ *.o
