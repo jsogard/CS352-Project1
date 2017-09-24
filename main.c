@@ -55,7 +55,6 @@ int do_user_command(char user_command[], history* hist){
 		}
 	}
 
-	add_log(hist, user_command);
 	be_concurrent = check_concurrency(args);
 
 	// make child process execute command
@@ -64,6 +63,8 @@ int do_user_command(char user_command[], history* hist){
 		if(execute_command(args) != 0){
 			printf("Invalid command: \"%s\"\n", user_command);
 		}
+		else
+			add_log(hist, user_command);
 	}
 	// parent process
 	else{
@@ -83,6 +84,7 @@ int main(void){
 		printf("osh>");
 		fgets(user_command, MAX_LINE_LENGTH, stdin);
 		remove_trailing_n(user_command);
+		if(strlen(user_command) == 0) continue;
 
 		if(do_user_command(user_command, hist) == CODE_EXIT)
 			return 0;
