@@ -83,8 +83,9 @@ int main(void){
 	while(1){
 		printf("osh>");
 		fgets(user_command, MAX_LINE_LENGTH, stdin);
+		if(strcmp(user_command,"\n")) continue;
+
 		remove_trailing_n(user_command);
-		if(strlen(user_command) == 0) continue;
 
 		if(do_user_command(user_command, hist) == CODE_EXIT)
 			return 0;
