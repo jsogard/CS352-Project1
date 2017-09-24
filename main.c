@@ -64,6 +64,7 @@ int do_user_command(char user_command[], history* hist){
 		if(execute_command(args) != 0){
 			printf("Invalid command: \"%s\"\n", user_command);
 		}
+		kill(getpid(), SIGTERM);
 	}
 	// parent process
 	else{
