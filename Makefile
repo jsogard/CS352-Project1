@@ -13,3 +13,6 @@ main.o: main.c utils.h history.h
 
 clean:
 	rm -rf *~ *.o
+
+sanitize: 
+	rm -rf *~ *.o cs352

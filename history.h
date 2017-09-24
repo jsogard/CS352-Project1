@@ -8,7 +8,7 @@
 
 typedef struct log{
 
-	char command[MAX_LINE_LENGTH + 1];
+	char *command;
 	int index;
 	struct log *next;
 	struct log *prev;
