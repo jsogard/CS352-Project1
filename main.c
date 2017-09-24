@@ -79,6 +79,8 @@ int do_user_command(char user_command[], history* hist){
 int main(void){
 	char user_command[MAX_LINE_LENGTH];
 	history *hist = new_history();
+	const char cmd_delim[2] = ";";
+	char *command;
 
 	while(1){
 		printf("osh>");
@@ -87,8 +89,12 @@ int main(void){
 
 		remove_trailing_n(user_command);
 
-		if(do_user_command(user_command, hist) == CODE_EXIT)
-			return 0;
+		command = strtok(user_command, cmd_delim);
+		while(command != NULL){
+			if(do_user_command(command, hist) == CODE_EXIT)
+				return 0;
+			command = strtok(NULL, cmd_delim);
+		}
 	}
 
 	return 0;
