@@ -55,6 +55,7 @@ int do_user_command(char user_command[], history* hist){
 		}
 	}
 
+	add_log(hist, user_command);
 	be_concurrent = check_concurrency(args);
 
 	// make child process execute command
@@ -63,8 +64,6 @@ int do_user_command(char user_command[], history* hist){
 		if(execute_command(args) != 0){
 			printf("Invalid command: \"%s\"\n", user_command);
 		}
-		else
-			add_log(hist, user_command);
 	}
 	// parent process
 	else{
