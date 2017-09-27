@@ -75,6 +75,24 @@ int do_user_command(char user_command[], history* hist){
 }
 
 
+int is_whitespace(char string[]){
+
+	char ws[4] = " \n\t";
+	int i, j, white = 0;
+	for(i = 0; i < MAX_LINE_LENGTH && string[i] != '\0'; i++){
+		for(j = 0; j < 3; j++){
+			if(string[i] == ws[j]){
+				white = 1;
+				break;
+			}
+		}
+		if(white == 0) return 0;
+		white = 0;
+	}
+	return 1;
+}
+
+
 
 int main(void){
 	char user_command[MAX_LINE_LENGTH];
@@ -85,7 +103,8 @@ int main(void){
 	while(1){
 		printf("osh>");
 		fgets(user_command, MAX_LINE_LENGTH, stdin);
-		if(strcmp(user_command,"\n")) continue;
+		if(is_whitespace(user_command))
+			continue;
 
 		remove_trailing_n(user_command);
 
