@@ -10,7 +10,7 @@
 
 #define CODE_EXIT 200
 
-int do_user_command(char user_command[], history* hist){
+int do_user_command(char *user_command, history* hist){
 
 	int be_concurrent;
 	char *args[MAX_WORD_COUNT + 1]; 
@@ -96,8 +96,8 @@ int is_whitespace(char string[]){
 
 int main(void){
 	char user_command[MAX_LINE_LENGTH];
+	char *command_list[MAX_LINE_LENGTH];
 	history *hist = new_history();
-	const char cmd_delim[2] = ";";
 	char *command;
 
 	while(1){
@@ -107,12 +107,12 @@ int main(void){
 			continue;
 
 		remove_trailing_n(user_command);
+		int i = 0;
 
-		command = strtok(user_command, cmd_delim);
-		while(command != NULL){
-			if(do_user_command(command, hist) == CODE_EXIT)
-				return 0;
-			command = strtok(NULL, cmd_delim);
+		parse_commands(user_command, command_list);
+
+		while((command = command_list[i++]) != NULL){
+			do_user_command(command, hist);
 		}
 	}
 

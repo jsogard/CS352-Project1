@@ -30,6 +30,18 @@ int parse_words(char *entire_line, char *words[]){
 	return i;
 }
 
+void parse_commands(char user_command[], char *cmd_list[]){
+
+	int ptr_index = 1, cmd_index = 0;
+	cmd_list[0] = user_command;
+	for(; cmd_index < MAX_LINE_LENGTH && user_command[cmd_index] != '\0'; cmd_index++){
+		if(user_command[cmd_index] == ';'){
+			user_command[cmd_index] = '\0';
+			cmd_list[ptr_index++] = &user_command[cmd_index + 1];
+		}
+	}
+	cmd_list[ptr_index] = NULL;
+}
 
 
 int check_concurrency(char *args[]){
